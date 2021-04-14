@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= detail.title %></title>
+</head>
+<body>
+    <a href= <%= `/profile/${detail.author}`%>><%= detail.username %></a>
+    <h3><%= detail.title %></h3>
+    <p><%= detail.body %></p>
+    <button id='like'>Like</button>
+    <div id='like_count'><%= detail.likes.length %></div>
+    <div><%= detail.createAt %></div>
+    <hr>
+    <% if (detail.comments.length > 0) { %>
+        <% detail.comments.forEach((item) => { %>
+            <a href = <%= `/profile/${item.author}`%>><%= item.username %></a>
+            <div><%= item.body %></div>
+            <div><%= item.createAt%></div>
+            <hr>
+    <% }) %>
+    <% } %>
+    <form name="comment">
+        <div>
+            <label for="body">Leave a comment here</label>
+            <div><textarea rows="9" cols="70" name="body" style="resize:none"></textarea></div>
+        </div>
+    </form>
+    <button id = 'comment' data-artid= <%= detail._id %>>Comment</button>
+    <script src='/js/article_detail.js'></script>
+</body>
+</html>

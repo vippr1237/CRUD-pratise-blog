@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ball Club of Depression</title>
+</head>
+<body>
+    <h1>CLB Bong' Ro cua Ckam` Cam va` Tin Hoc</h1>
+    <p>Trang web chia se kien thuc lap trinh` va bong' ro :D</p>
+    <% if (article.length > 0) { %>
+        <% article.forEach((item) => { %>
+        <div>
+        
+            <a href= <%= `/profile/${item.author}`%>><%= item.username %></a>
+        <a href= <%= `/article/${item._id}` %> >
+            <h3><%= item.title %></h3>
+        </a>
+            <p><%= item.body %></p>
+            <div>Likes: <%= item.likes.length %></div>
+            <div>Replies: <%= item.comments.length %></div>
+            <div><%= item.createAt %></div>
+        
+        </div>
+    <% })%>
+    <% } %>
+</body>
+</html>
