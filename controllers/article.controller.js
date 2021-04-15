@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const getArticles = (req, res) => {
     // const newtoken = refreshToken(req.body.token);
     
-    Article.find()
+    Article.find().sort({createAt: -1})
     .then(async (result) =>{
         const data = await getUserNames(result);
         res.render('home',{article: data});
@@ -24,7 +24,9 @@ const getArticle = (req, res) => {
         let data = JSON.parse(JSON.stringify(result));
         let user = await User.findById(data.author);
         data.username = user.username;
+        data.comments.sort((a, b) => {return new Date(b.createAt) - new Date(a.createAt)})
         data.comments = await getUserNames(data.comments);
+        
         res.render('article_detail',{detail: data});
     })
     .catch((err) =>{
@@ -111,8 +113,10 @@ async function comment(req, res) {
         }
         const article = await Article.findOne({_id: req.params.id});
         article.comments.push(newComment);
-        const updated = await article.save();
-        res.redirect(req.get('referer'));
+        let updated = await article.save();
+        let data = JSON.parse(JSON.stringify(updated));
+        data.comments = await getUserNames(data.comments);
+        res.json(data.comments);
     } catch (err) {
         res.json(err);
     }

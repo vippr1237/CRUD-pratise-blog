@@ -3,8 +3,10 @@ const like = document.querySelector('#like');
 const body =document.forms['comment'];
 const likeCount= document.querySelector('#like_count');
 const authtoken = localStorage.getItem('auth-token');
+const comment_section = document.querySelector('#comment-section');
 getLike();
 comment.addEventListener('click', async function(e){
+    e.preventDefault();
     const response = await fetch(`/article/${comment.getAttribute('data-artid')}/comment`,{
         method: 'POST',
         headers: {
@@ -19,8 +21,17 @@ comment.addEventListener('click', async function(e){
         return location.replace(response.url);
     }
     else {
+        
         const result = await response.json();
-        console.log(result);
+        result.forEach(function(item) {
+            comment_section.innerHTML +=
+            `<a href =/profile/${item.author}> ${item.username}</a>
+            <div>${ item.body }</div>
+            <div>${ item.createAt }</div>
+            <hr>`
+            body.body.value = '';
+        })
+
     }
 })
 

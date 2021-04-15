@@ -14,6 +14,7 @@
     <div id='like_count'><%= detail.likes.length %></div>
     <div><%= detail.createAt %></div>
     <hr>
+    <div id='comment-section'>
     <% if (detail.comments.length > 0) { %>
         <% detail.comments.forEach((item) => { %>
             <a href = <%= `/profile/${item.author}`%>><%= item.username %></a>
@@ -22,6 +23,7 @@
             <hr>
     <% }) %>
     <% } %>
+    </div>
     <form name="comment">
         <div>
             <label for="body">Leave a comment here</label>
