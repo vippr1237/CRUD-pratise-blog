@@ -7,7 +7,13 @@
     <title>Document</title>
 </head>
 <body>
+    <div><%= user.username %> <a href=/profile/<%= user._id %>/edit><button id="editBtn" data-uid= <%= user._id %>>Edit</button></a></div>
     
+    <div>First Name: <%= user.firstName %></div>
+    <div>Last Name: <%= user.lastName %></div>
+    <div>Email: <%= user.email %></div>
+    <div>Birth Day: <%= user.dob %></div>
+    <div>Address: <%= user.address %></div>
     <script src="/js/profile.js"></script>
 </body>
 </html>

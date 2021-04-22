@@ -123,20 +123,12 @@ async function comment(req, res) {
 }
 
 async function getLike(req, res) {
-    const token = req.header('auth-token');
-    
-    if (token == 'null' || token == 'undefined') {
-        return res.json(-1);
-    }
-    else {
-        const verfied = jwt.verify(token, process.env.TOKEN);
-        const uid = verfied._id;
+        
         const article = await Article.findById(req.params.id);
-        if (article.likes.indexOf(uid) != -1)
+        if (article.likes.indexOf(req.user._id) != -1)
             return res.json(1);
         else 
             return res.json(-1);
-    }
 }
 
 function viewEditArticle (req, res) {

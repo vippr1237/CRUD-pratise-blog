@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../controllers/article.controller')
-const authenticate = require('../common/authentication')
+const Article = require('../controllers/article.controller');
+const authenticate = require('../common/authentication');
+const clarify = require('../common/clarify');
+
 router.route('/')
 .get(Article.getArticles)
 .post(authenticate, Article.newArticle);
@@ -14,16 +16,16 @@ router.route('/new')
 
 router.route('/:id')
 .get(Article.getArticle)
-.delete(authenticate, Article.deleteArticle)
-.patch(authenticate, Article.updateArticle);
+.delete(authenticate, clarify, Article.deleteArticle)
+.patch(authenticate, clarify, Article.updateArticle);
 
 router.route('/:id/like')
-.get(Article.getLike)
+.get(authenticate, Article.getLike)
 .post(authenticate, Article.likeArticle);
 
 router.route('/:id/comment')
 .post(authenticate, Article.comment);
 
 router.route('/:id/edit')
-.get(Article.viewEditArticle)
+.get(authenticate, clarify, Article.viewEditArticle)
 module.exports = router;

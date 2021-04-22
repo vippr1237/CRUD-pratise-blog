@@ -66,9 +66,14 @@ async function getLike(){
             'auth-token': authtoken
         }
     });
-    const result = await response.json();
-    if (result == -1)
+    if (response.redirected){
         like.innerHTML = 'Like';
-    else 
-        like.innerHTML = 'Liked';
+    }
+    else {
+    const result = await response.json();
+        if (result == -1)
+            like.innerHTML = 'Like';
+        else 
+            like.innerHTML = 'Liked';
+    }
 }

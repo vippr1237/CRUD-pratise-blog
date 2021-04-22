@@ -7,10 +7,10 @@ module.exports = function(req, res, next) {
     try {
         const verfied = jwt.verify(token, process.env.TOKEN);
         req.user = verfied;
-        next();
+        return next();
     }
     catch (err) {
-        console.log(err);
+        //console.log(err);
         return res.redirect('/user/login');
     }
 }

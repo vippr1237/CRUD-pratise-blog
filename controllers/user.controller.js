@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const getProfile = async (req, res) =>{
     const user = await User.findById(req.params.id);
     try {
-        res.render('profile', {user: User});
+        res.render('profile', {user: user});
     }
     catch (err) {
         console.log(err);
@@ -57,9 +57,8 @@ const deleteUser = async (req, res) =>{
     }
 }
 
-const updateProfile = async (req, res) =>{
+const updateProfile = async (req, res) =>{ 
     try {
-        if (req.params.id == req.user._id) {
         const updated = await User.updateOne({_id: req.user._id},
         {$set: 
             {
@@ -70,13 +69,10 @@ const updateProfile = async (req, res) =>{
                 address: req.body.address
             }
         });
-        res.status(200).send(updated);
-        } else {
-            res.status(403).send(`You're not allowed to take action`);
-        }
+        return res.json(updated);
     }
     catch (err) {
-        res.status(500).send(err);
+        res.json(err);
     }
 }
 
@@ -109,6 +105,17 @@ const changePass = async (req, res) =>{
     }
 }
 
+async function getEditable (req, res) {
+
+    const user = await User.findOne({_id: req.params.id});
+    if (user._id == req.user._id) {
+        return res.json(1);
+    } else {
+        return res.json(-1);
+    }
+
+}
+
 const viewRegister = (req, res) =>{ 
     res.render('register');
 }
@@ -117,8 +124,9 @@ function viewSignIn(req, res) {
     res.render('signin');
 }
 
-function viewEditProfile(req, res) {
-    res.render('editprofile');
+async function viewEditProfile(req, res) {
+    const user = await User.findOne({_id: req.params.id});
+    res.render('editprofile', {user: user});
 }
 
 
@@ -131,6 +139,7 @@ module.exports = {
     changePass: changePass,
     login: login,
     viewSignIn: viewSignIn,
-    viewEditProfile: viewEditProfile
+    viewEditProfile: viewEditProfile,
+    getEditable: getEditable
 }
 

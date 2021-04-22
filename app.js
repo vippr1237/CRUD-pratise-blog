@@ -31,6 +31,11 @@ app.use('/article',articleRoutes);
 app.use('/profile', profileRoutes);
 app.use('/user', userRoutes);
 
+//http
+app.get('/403',function(req, res){
+    res.render('http/403');
+})
+
 // connect to database
 mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() =>{
