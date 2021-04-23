@@ -1,10 +1,13 @@
 const comment = document.querySelector('#comment');
 const like = document.querySelector('#like');
+const editBtn = document.querySelector('#editBtn');
 const body =document.forms['comment'];
 const likeCount= document.querySelector('#like_count');
 const authtoken = localStorage.getItem('auth-token');
 const comment_section = document.querySelector('#comment-section');
+
 getLike();
+getEdit();
 comment.addEventListener('click', async function(e){
     e.preventDefault();
     const response = await fetch(`/article/${comment.getAttribute('data-artid')}/comment`,{
@@ -75,5 +78,25 @@ async function getLike(){
             like.innerHTML = 'Like';
         else 
             like.innerHTML = 'Liked';
+    }
+}
+
+async function getEdit() {
+    const response = await fetch(`/article/${comment.getAttribute('data-artid')}/edit`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authtoken
+        }
+    });
+    if (response.redirected){
+        editBtn.style.display = 'none';
+    }
+    else {
+    const result = await response.json();
+        if (result == -1)
+            editBtn.style.display = 'none';
+        else 
+            editBtn.style.display = 'inline-block';
     }
 }

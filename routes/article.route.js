@@ -16,8 +16,8 @@ router.route('/new')
 
 router.route('/:id')
 .get(Article.getArticle)
-.delete(authenticate, clarify, Article.deleteArticle)
-.patch(authenticate, clarify, Article.updateArticle);
+.delete(authenticate, Article.deleteArticle)
+.patch(authenticate, Article.updateArticle);
 
 router.route('/:id/like')
 .get(authenticate, Article.getLike)
@@ -27,5 +27,6 @@ router.route('/:id/comment')
 .post(authenticate, Article.comment);
 
 router.route('/:id/edit')
-.get(authenticate, clarify, Article.viewEditArticle)
+.get(Article.viewEditArticle)
+.post(authenticate, Article.getEditable);
 module.exports = router;

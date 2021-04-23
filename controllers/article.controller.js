@@ -73,16 +73,11 @@ const updateArticle = async (req, res) => {
         const {error} = articleValidator(req.body);
         //validate 
         if (error) return res.json(error.details[0].message);
-        if (article.author == req.user._id) {
         const updated = await Article.updateOne(
         {_id: req.params.id},
         {$set: {title: req.body.title, body: req.body.body}}
         );
         res.redirect('/');
-        }
-        else {
-            res.json("Access Denied")
-        }
     }
     catch (err) {
         res.json(err);
@@ -131,8 +126,18 @@ async function getLike(req, res) {
             return res.json(-1);
 }
 
-function viewEditArticle (req, res) {
-    res.render('editarticle');
+async function getEditable(req, res) {
+    const article = await Article.findOne({_id: req.params.id});
+    if (article.author == req.user._id) {
+        return res.json(1);
+    } else {
+        return res.json(-1);
+    }
+}
+
+async function viewEditArticle (req, res) {
+    const article = await Article.findOne({_id: req.params.id});
+    res.render('editarticle',{article: article});
 }
 
 
@@ -159,4 +164,5 @@ module.exports = {
     comment : comment,
     viewEditArticle: viewEditArticle,
     getLike: getLike,
+    getEditable: getEditable,
 }

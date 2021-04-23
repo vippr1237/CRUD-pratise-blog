@@ -8,7 +8,7 @@
 </head>
 <body>
     <a href= <%= `/profile/${detail.author}`%>><%= detail.username %></a>
-    <h3><%= detail.title %></h3>
+    <h3><%= detail.title %><a href="/article/<%= detail._id %>/edit"><button id="editBtn">Edit</button></a></h3>
     <p><%= detail.body %></p>
     <button id='like'>Like</button>
     <div id='like_count'><%= detail.likes.length %></div>

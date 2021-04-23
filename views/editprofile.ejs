@@ -8,11 +8,11 @@
 </head>
 <body>
     <form action="" name="editF">
-        <label>First Name:</label><input type="text" name="firstName" value = <%= user.firstName %>>
-        <label>Last Name:</label><input type="text" name="lastName" value= <%= user.lastName %>>
-        <label>Email:</label><input type="text" name="email" value= <%= user.email %>>
-        <label>Birth Day:</label><input type="date" name="dob" value= <%= user.dob %>>
-        <label>Address:</label> <input type="text" name="address" value=<%= user.address %>>
+        <label>First Name:</label><input type="text" name="firstName" value = "<%= user.firstName %>">
+        <label>Last Name:</label><input type="text" name="lastName" value= "<%= user.lastName %>"">
+        <label>Email:</label><input type="email" name="email" value= "<%= user.email %>">
+        <label>Birth Day:</label><input type="date" name="dob" value= "<%= user.dob %>">
+        <label>Address:</label> <input type="text" name="address" value="<%= user.address %>">
     </form>
     <button id='editBtn' data-uid= <%=user._id %>>Edit</button>
     <script src="/js/edit_profile.js"></script>
